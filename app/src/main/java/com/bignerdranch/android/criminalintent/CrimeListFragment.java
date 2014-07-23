@@ -1,10 +1,9 @@
 package com.bignerdranch.android.criminalintent;
 
-import java.util.ArrayList;
-
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Outline;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -23,6 +22,8 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class CrimeListFragment extends ListFragment {
     private ArrayList<Crime> mCrimes;
@@ -121,12 +122,25 @@ public class CrimeListFragment extends ListFragment {
 
                 }
             });
-            
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+                int diameter = getResources().getDimensionPixelSize(R.dimen.diameter);
+                Outline outline = new Outline();
+                outline.setOval(0, 0, diameter, diameter);
+                View addButton = v.findViewById(R.id.add_button);
+                addButton.setOutline(outline);
+                addButton.setClipToOutline(true);
+                addButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        addNewCrime();
+                    }
+                });
+            }
         }
 
         return v;
     }
-    
+
     public void onListItemClick(ListView l, View v, int position, long id) {
         // get the Crime from the adapter
         Crime c = ((CrimeAdapter)getListAdapter()).getItem(position);
@@ -170,7 +184,7 @@ public class CrimeListFragment extends ListFragment {
                 return super.onOptionsItemSelected(item);
         } 
     }
-    
+
     private void addNewCrime() {
         Crime crime = new Crime();
         CrimeLab.get(getActivity()).addCrime(crime);
