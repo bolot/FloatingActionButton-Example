@@ -148,10 +148,7 @@ public class CrimeListFragment extends ListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_new_crime:
-                Crime crime = new Crime();
-                CrimeLab.get(getActivity()).addCrime(crime);
-                ((CrimeAdapter)getListAdapter()).notifyDataSetChanged();
-                mCallbacks.onCrimeSelected(crime);
+                addNewCrime();
                 return true;
             case R.id.menu_item_show_subtitle:
                 if (getActivity().getActionBar().getSubtitle() == null) {
@@ -169,6 +166,13 @@ public class CrimeListFragment extends ListFragment {
         } 
     }
     
+    private void addNewCrime() {
+        Crime crime = new Crime();
+        CrimeLab.get(getActivity()).addCrime(crime);
+        ((CrimeAdapter)getListAdapter()).notifyDataSetChanged();
+        mCallbacks.onCrimeSelected(crime);
+    }
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
         getActivity().getMenuInflater().inflate(R.menu.crime_list_item_context, menu);
