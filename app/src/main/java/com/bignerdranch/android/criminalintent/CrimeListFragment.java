@@ -64,7 +64,12 @@ public class CrimeListFragment extends ListFragment {
     @TargetApi(11)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View v = super.onCreateView(inflater, parent, savedInstanceState);
+        View v;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            v = inflater.inflate(R.layout.fragment_crime_list, parent, false);
+        } else {
+            v = super.onCreateView(inflater, parent, savedInstanceState);
+        }
         
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {   
             if (mSubtitleVisible) {
