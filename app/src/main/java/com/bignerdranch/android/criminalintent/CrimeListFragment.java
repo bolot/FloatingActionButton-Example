@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ArrayAdapter;
@@ -122,12 +123,16 @@ public class CrimeListFragment extends ListFragment {
 
                 }
             });
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
-                int diameter = getResources().getDimensionPixelSize(R.dimen.diameter);
-                Outline outline = new Outline();
-                outline.setOval(0, 0, diameter, diameter);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 View addButton = v.findViewById(R.id.add_button);
-                addButton.setOutline(outline);
+                addButton.setOutlineProvider(new ViewOutlineProvider() {
+                    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                    @Override
+                    public void getOutline(View view, Outline outline) {
+                        int diameter = getResources().getDimensionPixelSize(R.dimen.diameter);
+                        outline.setOval(0, 0, diameter, diameter);
+                    }
+                });
                 addButton.setClipToOutline(true);
                 addButton.setOnClickListener(new View.OnClickListener() {
                     @Override
