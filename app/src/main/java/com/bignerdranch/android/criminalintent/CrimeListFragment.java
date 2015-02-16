@@ -67,7 +67,7 @@ public class CrimeListFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             v = inflater.inflate(R.layout.fragment_crime_list, parent, false);
         } else {
             v = super.onCreateView(inflater, parent, savedInstanceState);
